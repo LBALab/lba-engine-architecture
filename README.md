@@ -8,4 +8,4 @@ This documentation is hosted by [Read the docs](https://docs.readthedocs.io/en/s
 
 If you'd like to contribute to the project, there are several ways you can help.
 
-If you need help to get you started with this project, you can join us on [Discord](https://discord.gg/wQse6WB6).
+If you need help to get you started with this project, you can join us on [Discord](https://discord.gg/gfzna5SfZ5).
