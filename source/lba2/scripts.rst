@@ -51,9 +51,9 @@ This is useful when compiling or decompiling the scripts as there is a 1:1 corre
 the compiled bytecode.
 
 
-============        =======================================         ===========
+============        ===========================================     ===========
 Opcode (hex)        Name/syntax                                     Description
-============        =======================================         ===========
+============        ===========================================     ===========
 0x00                END                                             Marks the end of this script.
 0x01                NOP                                             Does nothing.
 0x02                SNIF cond pcrel16                               Jumps always, then replaced with SWIF opcode if condition was true.
@@ -85,7 +85,7 @@ Opcode (hex)        Name/syntax                                     Description
 0x21                SET_BEHAVIOUR pc16:offset                       Jumps to a new behaviour block.
 0x22                SET_BEHAVIOR_OBJ u8:actor pc16:off              Changes the active behaviour of another actor.
 0x23                END_BEHAVIOUR                                   Marks the end of a life script behaviour block.
-0x24                SET_VAR_GAME u8:var u8:value                    Sets the value of a game variable.
+0x24                SET_VAR_GAME u8:var i16:value                   Sets the value of a game variable.
 0x25                KILL_OBJ u8:actor                               Kills the given actor.
 0x26                SUICIDE                                         Kills this actor.
 0x27                USE_KEY                                         Subtracts one key from the inventory.
@@ -106,7 +106,7 @@ Opcode (hex)        Name/syntax                                     Description
 0x36                BRICK_COL u8:collision_type                     Enables or disables terrain collisions for this actor.
 0x37                OR_IF cond pcrel16                              Jumps if condition is true.
 0x38                INVISIBLE u8:invisible                          Makes the actor invisible or visible again.
-0x39                SHADOW_OBJ u8:enabled                           Enables or disables the shadow for this actor.
+0x39                SHADOW_OBJ u8:actor u8:enabled                  Enables or disables the shadow for another actor.
 0x3A                POS_POINT u8:point                              Moves this actor to a point.
 0x3B                SET_MAGIC_LEVEL u8:level                        Sets Twinsen's magic level.
 0x3C                SUB_MANA u8:quantity                            Drains some of Twinsen's mana.
@@ -135,7 +135,7 @@ Opcode (hex)        Name/syntax                                     Description
 0x53                SET_FRAME u8:frame                              Changes the frame number of this actor's animation.
 0x54                SET_SPRITE u8:sprite                            Changes the sprite used for this actor.
 0x55                SET_FRAME_3DS u8:frame                          Changes the frame number of this actor's animated sprite.
-0x56                IMPACT_OBJ u8:actor i16:anim                    Plays an impact animation above an actor.
+0x56                IMPACT_OBJ u8:actor i16:anim i16:yoffset        Plays an impact animation above an actor.
 0x57                IMPACT_POINT u8:point i16:anim                  Plays an impact animation at a point.
 0x58                ADD_MESSAGE i16:message                         Same as MESSAGE.
 0x59                BALLOON u8:enable                               Enables or disables use of speech balloons.
@@ -177,8 +177,8 @@ Opcode (hex)        Name/syntax                                     Description
 0x7D                SAMPLE_STOP i16:sample                          Stops the given sample if it is playing from this actor.
 0x7E                REPEAT_SAMPLE i16:sample u8:count               Like SAMPLE but plays the given number of repeats.
 0x7F                BACKGROUND u8:flag                              Sets or clears the "background" (don't redraw) flag for this actor.
-0x80                ADD_VAR_GAME u8:var u8:value                    Adds a value to a game variable.
-0x81                SUB_VAR_GAME u8:var u8:value                    Subtracts a value from a game variable.
+0x80                ADD_VAR_GAME u8:var i16:value                   Adds a value to a game variable.
+0x81                SUB_VAR_GAME u8:var i16:value                   Subtracts a value from a game variable.
 0x82                ADD_VAR_SCENE u8:var u8:value                   Adds a value to a scene variable.
 0x83                SUB_VAR_SCENE u8:var u8:value                   Subtracts a value from a scene variable.
 0x84                NOP                                             Does nothing.
@@ -203,8 +203,8 @@ Opcode (hex)        Name/syntax                                     Description
 0x97                PARM_SAMPLE i16:freq u8:vol i16:fbase           Configures audio sample parameters.
 0x98                NEW_SAMPLE i16:sample i16:f u8:v i16:fb         Plays an audio sample on this actor with custom parameters.
 0x99                POS_OBJ_AROUND u8:move_actor u8:dest            Positions an actor on or near another actor.
-0x9A                PCX_MESS_OBJ u8:img u8:fx u8:act u8:msg         Show a message on a still image background.
-============        =======================================         ===========
+0x9A                PCX_MESS_OBJ u8:img u8:fx u8:act i16:msg        Show a message on a still image background.
+============        ===========================================     ===========
 
 Fall types (undocumented values are invalid):
 
@@ -284,7 +284,7 @@ Opcode (hex)        Name/syntax                                     Description
 0x0C                CONE_VIEW u8:actor -> i16                       Distance to another actor, if they are within a 90-degree view cone.
 0x0D                HIT_BY -> i8                                    Actor that last hit this actor.
 0x0E                ACTION -> i8                                    Action key was pressed.
-0x0F                VAR_GAME u8:var -> u8                           Value of a game variable.
+0x0F                VAR_GAME u8:var -> i16                          Value of a game variable.
 0x10                LIFE_POINT -> i16                               Health of this actor.
 0x11                LIFE_POINT_OBJ u8:actor -> i16                  Health of another actor.
 0x12                KEYS -> i8                                      Number of keys.
@@ -294,13 +294,13 @@ Opcode (hex)        Name/syntax                                     Description
 0x16                DISTANCE_3D u8:actor -> i16                     3D distance to another actor.
 0x17                MAGIC_LEVEL -> i8                               Magic level.
 0x18                MANA -> i8                                      Twinsen's mana points.
-0x19                ITEM_USED -> i8                                 Item being used.
+0x19                ITEM_USED u8:item -> i8                         Item being used.
 0x1A                CHOICE -> i16                                   Choice made in last dialogue.
 0x1B                FUEL -> i16                                     Returns junk value; do not used (lba1 leftover).
 0x1C                CARRY_BY -> i8                                  Actor carrying this actor.
 0x1D                CDROM -> i8                                     Whether this is the CDROM build or floppy build.
 0x1E                LADDER u8:zone -> i8                            Whether a ladder zone is enabled.
-0x1F                RND -> u8                                       Random number.
+0x1F                RND u8:max -> u8                                Random number.
 0x20                RAIL u8:zone -> i8                              Whether a rail zone is enabled.
 0x21                BETA -> i16                                     Current angle of this actor.
 0x22                BETA_OBJ u8:actor -> i16                        Current angle of another actor.
@@ -311,9 +311,9 @@ Opcode (hex)        Name/syntax                                     Description
 0x27                REAL_ANGLE u8:actor -> i16                      Angle from this actor to another, clamped.
 0x28                DEMO -> i8                                      Whether this is the demo build.
 0x29                COL_BRICK -> i8                                 Whether this actor collides with scenery.
-0x2A                COL_DECORS_OBJ u8:actor -> i8                   Whether another actor collides with scenery.
+0x2A                COL_BRICK_OBJ u8:actor -> i8                    Whether another actor collides with scenery.
 0x2B                PROCESSOR -> i8                                 Whether running on an old processor.
-0x2C                OBJECT_DISPLAYED -> i8                          Whether this actor was drawn to the screen.
+0x2C                OBJECT_DISPLAYED u8:actor -> i8                 Whether this actor was drawn to the screen.
 0x2D                ANGLE_OBJ u8:actor -> i16                       Angle from another actor to this actor.
 ============        =======================================         ===========
 
