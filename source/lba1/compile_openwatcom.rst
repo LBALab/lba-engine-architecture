@@ -10,7 +10,7 @@ Prerequisites
 Getting prerequisites and sources
 ---------------------------------
 
-The prerequisites are freely available, MASM as part of `Visual Studio Community <https://visualstudio.microsoft.com/pt-br/vs/community/>`__ (Tested with version 2022). Both can be installed at their default locations.
+The prerequisites are freely available, MASM as part of `Visual Studio Community <https://visualstudio.microsoft.com/pt-br/vs/community/>`__ (Tested with versions 2019 and 2022). Both can be installed at their default locations.
 
 For Open Watcom, be sure to select full instalation and to modify environment variables later.
 
@@ -80,3 +80,25 @@ To run the game, you will need the original assets of the game and the ``LBA0.ex
 -  copy ``LBA0.exe``,
 
 into the same directory. The compiled file was verified to run with `DOSBox Staging <https://dosbox-staging.github.io/>`__.
+
+Troubleshooting
+---------------
+
+*Q: When I execute LBA0.exe, an error appears: "SVGA card BIOS does not support VESA extensions. Please refer to your SVGA card documentation for installing VESA driver". What can I do?*
+
+A: To solve this, change the SvgaDriver configuration in LBA.CFG to:
+
+::
+  
+   SvgaDriver: TSENG.DLL 
+   
+Where TSENG.DLL is set instead of S3.DLL. If the issue persists, other drivers may be used (check LBA.CFG to see which are available in the game assets). As of date, this was tested using Tseng.
+
+Additionally, change the type of machine DOSBox tries to emulate. In the DOSBox configuration file, set the machine value to:
+
+::
+   
+   [dosbox]
+   machine=svga_et4000
+
+This will change the emulation of DOSBox to Tseng Labs ET4000. If you choose to use another SVGA driver, change the machine value accordingly (check the DOSBox configuration file to see the available options).
