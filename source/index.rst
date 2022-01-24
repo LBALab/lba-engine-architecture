@@ -46,4 +46,5 @@ LBA2 engine
    lba2/compile
    lba2/audio
    lba2/scripts
+   lba2/zones
 
