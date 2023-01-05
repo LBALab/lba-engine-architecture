@@ -18,7 +18,7 @@ To get the sources, clone the `lba1-classic-community repository <https://github
 
 ::
 
-   git clone https://github.com/2point21/lba-classic-doc.git
+   git clone https://github.com/2point21/lba1-classic-community.git
 
 Environment configuration
 -------------------------
