@@ -33,6 +33,7 @@ LBA1 engine
    :name: lba1
 
    lba1/compile
+   lba1/compile_openwatcom
    lba1/audio
 
 LBA2 engine
