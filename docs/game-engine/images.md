@@ -11,12 +11,12 @@ LBA and TICO uses a 8-bit raw image format containing 256 colours and a 640 by 4
 
 ## LBA1
 
-![LBA1 Sendell](/assets/lba1-sendell.png)
+![LBA1 Sendell]({{ site.baseurl }}/assets/lba1-sendell.png)
 
 ## LBA2
 
-![LBA2 Lighthouse](/assets/lba2-lighthouse.png)
+![LBA2 Lighthouse]({{ site.baseurl }}/assets/lba2-lighthouse.png)
 
 ## TICO
 
-![TICO Menu](/assets/tico-menu.jpg)
+![TICO Menu]({{ site.baseurl }}/assets/tico-menu.jpg)

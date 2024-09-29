@@ -13,6 +13,8 @@ aux_links:
 
 permalink: pretty
 
+color_scheme: dark
+
 defaults:
   - scope:
       path: "docs"
