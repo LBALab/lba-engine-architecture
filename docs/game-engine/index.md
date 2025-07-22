@@ -37,7 +37,8 @@ LBA uses the same flat polygons but added the implementation of Gouraud Shading 
 
 LBA2 and TICO had another enhancement by adding texture mapping to their 3d model formats.
 
-![LBA2 3d model]({{ site.baseurl }}/assets/lba2-model.png) ![TICO 3d models](/assets/tico.jpg)
+![LBA2 3d model]({{ site.baseurl }}/assets/lba2-model.png)
+![TICO 3d models]({{ site.baseurl }}/assets/tico.jpg)
 
 LBA2 also used the models for the outside 3d scenes, which had a further improvement from isometric only scenes in from LBA1.
 
